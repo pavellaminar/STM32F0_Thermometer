@@ -2,8 +2,6 @@
 
 #define PRESCALER       24000-1;         
 #define AUTO_RELOAD     10000-1;         
-#define RESET           0x0;
-
 
 #define TEMP110_CAL_ADDR ((uint16_t*) ((uint32_t) 0x1FFFF7C2))
 #define TEMP30_CAL_ADDR ((uint16_t*) ((uint32_t) 0x1FFFF7B8))
@@ -54,8 +52,8 @@ void Temp_sensor_ini(void){
 }
 
 void Temperature_show(uint32_t degree){
-  // LED9 (Blue) will show decades of temperature and
-  // LED8 (Green) will show units of temperature
+  // LED9 (Blue) will show decades degres of temperature and
+  // LED8 (Green) will show units degres of temperature
   uint8_t units = degree % 10;
   uint8_t decades = (degree - units) / 10;
   
@@ -95,7 +93,6 @@ void Temperature_show(uint32_t degree){
 
 int32_t Temerature_calc (uint32_t raw_data){
   int32_t temperature;
-  
   temperature = ((raw_data * VDD_APPLI / VDD_CALIB) - (int32_t) *TEMP30_CAL_ADDR ) ;	
   temperature = temperature * (int32_t)(110 - 30);                      
   temperature = temperature / (int32_t)(*TEMP110_CAL_ADDR - *TEMP30_CAL_ADDR);                 
@@ -103,14 +100,12 @@ int32_t Temerature_calc (uint32_t raw_data){
   return(temperature);
 }
 
-
 void TIM6_DAC_IRQHandler(void){
   if (ADC1->DR){
     Temperature_show(Temerature_calc(ADC1->DR));
   }
   TIM6->SR &= ~TIM_SR_UIF;
 }
-
 
 int main(){
   Led_ini();
