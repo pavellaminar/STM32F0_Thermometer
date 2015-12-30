@@ -30,11 +30,11 @@ void Timer_ini(){
 //--------- TEMPERATURE SENSOR INIT ----------
 void Temp_sensor_ini(void){
   ADC1->CFGR2 |= ADC_CFGR2_CKMODE_1; 
-  RCC->APB2ENR |= RCC_APB2ENR_ADCEN;
+  RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;  //
   ADC1->CFGR1 |= ADC_CFGR1_EXTEN_0;
   ADC1->CFGR1 |= ADC_CFGR1_EXTSEL_0 | ADC_CFGR1_EXTSEL_1;
   ADC1->CHSELR = ADC_CHSELR_CHSEL16;
-  ADC1->SMPR |= ADC_SMPR_SMP_0 | ADC_SMPR_SMP_1;
+  ADC1->SMPR |= ADC_SMPR_SMPR_0 | ADC_SMPR_SMPR_1; // 
   ADC1->CR |= ADC_CR_ADCAL;                       // Temperature sensor colibration
    while ((ADC1->CR & ADC_CR_ADCAL));
   ADC->CCR |= ADC_CCR_TSEN;  
@@ -81,7 +81,7 @@ int main(){
   while(1){
     if (!(ADC1->ISR & ADC_ISR_EOC)){      
       Temperature_show(Temerature_calc(ADC1->DR));
-      ADC1->ISR |= ADC_ISR_EOC;
+      //ADC1->ISR |= ADC_ISR_EOC;
     }
   }
 }
