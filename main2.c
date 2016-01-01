@@ -79,7 +79,7 @@ int main(){
   Timer_ini(); 
   
   while(1){
-    if (!(ADC1->ISR & ADC_ISR_EOC)){      
+    if ((ADC1->ISR & ADC_ISR_EOC)){      
       Temperature_show(Temerature_calc(ADC1->DR));
       //ADC1->ISR |= ADC_ISR_EOC;
     }
