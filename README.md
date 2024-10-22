@@ -1,4 +1,4 @@
-#Thermometer with LED blinking indication
+# Thermometer with LED blinking indication
 
 STM32F0Discovery ADC Temperature sensor testing for my learning. NO StdPeriph used. 
 Everyone can copy or change it but i don't sure what it will be helpful for someone else ))
